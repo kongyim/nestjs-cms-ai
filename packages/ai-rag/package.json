@@ -1,0 +1,7 @@
+{
+  "name": "@hub/ai-rag",
+  "version": "0.1.0",
+  "private": true,
+  "main": "../../dist/packages/ai-rag/src/index.js",
+  "types": "../../dist/packages/ai-rag/src/index.d.ts"
+}

@@ -1,0 +1,256 @@
+@layer theme, base, mui, components, utilities;
+@import "tailwindcss";
+@import "@nestjs-cms/admin/styles.css";
+:root {
+  color-scheme: light;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6fa;
+  color: #17253b;
+}
+* {
+  box-sizing: border-box;
+}
+.hub {
+  max-width: 1200px;
+  margin: auto;
+  padding: 8px 0 32px;
+}
+.hub h1 {
+  font-size: 30px;
+  letter-spacing: -1px;
+  margin: 0 0 8px;
+  font-weight: 750;
+}
+.hub h2 {
+  font-size: 19px;
+  font-weight: 650;
+  margin: 0 0 14px;
+}
+.hub p {
+  line-height: 1.6;
+}
+.muted {
+  color: #63748a;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #397d78;
+  margin-bottom: 12px;
+}
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.space {
+  justify-content: space-between;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
+.card {
+  background: white;
+  border: 1px solid #dfe6ef;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 2px 4px #12203a04;
+}
+.stat {
+  font-size: 36px;
+  font-weight: 750;
+  letter-spacing: -1px;
+  color: #183b55;
+}
+.hub button,
+.hub .button {
+  border: 1px solid #cbd6e2;
+  border-radius: 8px;
+  padding: 9px 15px;
+  font-weight: 600;
+  background: white;
+  color: #25415b;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+}
+.hub button.primary {
+  background: #1d645e;
+  color: white;
+  border-color: #1d645e;
+}
+.hub button.danger {
+  color: #a52d3b;
+}
+.hub button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.hub input,
+.hub textarea,
+.hub select {
+  border: 1px solid #c7d3e0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: white;
+  color: #17253b;
+  font: inherit;
+  max-width: 100%;
+}
+.hub input:not([type="checkbox"]),
+.hub textarea {
+  width: 100%;
+}
+.hub label {
+  font-size: 13px;
+  font-weight: 600;
+  display: block;
+  margin: 12px 0 6px;
+}
+.hub textarea {
+  resize: vertical;
+}
+.hub .row input {
+  flex: 1;
+  min-width: 180px;
+}
+.hub table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.hub th {
+  text-align: left;
+  color: #6b7b90;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+.hub td,
+.hub th {
+  padding: 14px 10px;
+  border-bottom: 1px solid #e8edf4;
+}
+.table-wrap {
+  overflow: auto;
+}
+.badge {
+  font-size: 11px;
+  background: #e9f2ef;
+  border: 1px solid #cee1da;
+  color: #226758;
+  border-radius: 20px;
+  padding: 4px 9px;
+  white-space: nowrap;
+}
+.badge.failed {
+  background: #fff0ef;
+  color: #a53639;
+}
+.error {
+  padding: 12px 16px;
+  border: 1px solid #e6b5b5;
+  background: #fff2f2;
+  color: #8d2434;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+.dropzone {
+  border: 2px dashed #a4c0c3;
+  padding: 28px;
+  text-align: center;
+  border-radius: 12px;
+  background: #f5faf9;
+  margin: 18px 0;
+}
+.hub pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 13px/1.7 monospace;
+}
+.message {
+  white-space: pre-wrap;
+  line-height: 1.75;
+  margin: 14px 0;
+  padding: 20px;
+  border: 1px solid #dde5ee;
+  border-radius: 12px;
+  background: #fff;
+}
+.message.user {
+  background: #eaf1f5;
+  margin-left: 10%;
+}
+.sources {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.source {
+  flex: 1;
+  min-width: 180px;
+  max-width: 400px;
+  background: #f3f7f9;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.split {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 20px;
+}
+.session {
+  width: 100%;
+  text-align: left;
+  margin: 4px 0;
+}
+.empty {
+  padding: 44px 20px;
+  text-align: center;
+  color: #6a7e95;
+}
+.hub details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.hub progress {
+  width: 100%;
+  accent-color: #1d645e;
+}
+.hero {
+  background: linear-gradient(110deg, #eaf2f1, #f7f9fb);
+  border: 1px solid #dbe7e6;
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+.hero p {
+  max-width: 700px;
+}
+.hub :focus-visible {
+  outline: 3px solid #529eaa;
+  outline-offset: 3px;
+}
+@media (max-width: 750px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .hub h1 {
+    font-size: 25px;
+  }
+  .card {
+    padding: 16px;
+  }
+  .hero {
+    padding: 20px;
+  }
+}

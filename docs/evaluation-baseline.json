@@ -1,0 +1,13 @@
+{
+  "dataset": "ecommerce-v1",
+  "provider": "mock:hash-v1:64",
+  "topK": 6,
+  "hybrid": true,
+  "summary": {
+    "mrr": 0.8708333333333332,
+    "count": 20,
+    "recallAtK": 1,
+    "meanRetrievalMs": 1.947768599999654
+  },
+  "note": "Deterministic mock pipeline measurement; not real-model answer quality."
+}

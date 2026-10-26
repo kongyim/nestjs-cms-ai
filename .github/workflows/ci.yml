@@ -1,0 +1,32 @@
+name: verify
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: corepack enable
+      - run: cp .env.example .env
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck && pnpm lint && pnpm test && pnpm build
+      - run: docker compose up -d --wait postgres redis
+      - run: pnpm db:migrate
+      - name: Start API and worker
+        run: |
+          pnpm start:api > /tmp/api.log 2>&1 &
+          pnpm start:worker > /tmp/worker.log 2>&1 &
+          pnpm --filter @hub/web start > /tmp/web.log 2>&1 &
+          for n in $(seq 1 60); do curl -fsS http://localhost:3001/api/health/ready && break || sleep 1; done
+      - run: pnpm test:integration
+      - run: pnpm db:seed
+      - name: Wait for demo ingestion
+        run: node scripts/wait-demo.mjs
+      - run: pnpm eval
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - name: Logs
+        if: always()
+        run: cat /tmp/api.log /tmp/worker.log /tmp/web.log

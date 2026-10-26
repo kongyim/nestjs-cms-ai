@@ -1,0 +1,7 @@
+{
+  "name": "@hub/ai-core",
+  "version": "0.1.0",
+  "private": true,
+  "main": "../../dist/packages/ai-core/src/index.js",
+  "types": "../../dist/packages/ai-core/src/index.d.ts"
+}

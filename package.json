@@ -1,0 +1,58 @@
+{
+  "name": "nestjs-ai-knowledge-hub",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=22.3 <27"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && pnpm --filter @hub/web build",
+    "typecheck": "tsc --noEmit && pnpm --filter @hub/web typecheck",
+    "dev": "concurrently -k 'ts-node apps/api/src/main.ts' 'ts-node apps/api/src/worker.ts' 'pnpm --filter @hub/web dev'",
+    "start:api": "node dist/apps/api/src/main.js",
+    "start:worker": "node dist/apps/api/src/worker.js",
+    "db:migrate": "ts-node scripts/migrate.ts",
+    "db:seed": "ts-node scripts/seed.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "test:integration": "tsx --test tests/integration.ts",
+    "eval": "ts-node scripts/evaluate.ts",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@nestjs-cms/auth": "0.1.1",
+    "@nestjs-cms/core": "0.1.6",
+    "@nestjs/common": "^11.1.0",
+    "@nestjs/core": "^11.1.0",
+    "@nestjs/platform-express": "^11.1.0",
+    "@nestjs/swagger": "^11.2.0",
+    "bullmq": "^5.61.0",
+    "dotenv": "^16.6.0",
+    "express": "^5.1.0",
+    "mammoth": "1.13.0",
+    "pdf-parse": "2.4.5",
+    "pg": "^8.16.0",
+    "pino": "^9.9.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "typeorm": "^0.3.25",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@playwright/test": "^1.64.1",
+    "@types/express": "^5.0.0",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.15.0",
+    "concurrently": "^9.2.0",
+    "eslint": "^9.39.0",
+    "prettier": "^3.6.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.0"
+  }
+}

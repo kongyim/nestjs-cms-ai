@@ -1,0 +1,122 @@
+[
+  {
+    "id": "refund-policy-001",
+    "question": "What is the refund period for standard purchases?",
+    "expectedSourceIds": ["refund-policy"],
+    "expectedAnswer": "30 days"
+  },
+  {
+    "id": "refund-policy-002",
+    "question": "Can international orders be returned?",
+    "expectedSourceIds": ["refund-policy"],
+    "expectedAnswer": "Yes, within 30 days"
+  },
+  {
+    "id": "refund-policy-003",
+    "question": "When are refunds issued after warehouse inspection?",
+    "expectedSourceIds": ["refund-policy"],
+    "expectedAnswer": "5 business days"
+  },
+  {
+    "id": "product-catalogue-004",
+    "question": "Which products include a two-year warranty?",
+    "expectedSourceIds": ["product-catalogue"],
+    "expectedAnswer": "Aurora desk lamp and Orbit USB-C hub"
+  },
+  {
+    "id": "product-catalogue-005",
+    "question": "How much does the Trail bottle hold?",
+    "expectedSourceIds": ["product-catalogue"],
+    "expectedAnswer": "750 ml"
+  },
+  {
+    "id": "product-catalogue-006",
+    "question": "What HDMI resolution does the Orbit hub support?",
+    "expectedSourceIds": ["product-catalogue"],
+    "expectedAnswer": "4K at 60 Hz"
+  },
+  {
+    "id": "shipping-methods-007",
+    "question": "How much is UK express delivery?",
+    "expectedSourceIds": ["shipping-methods"],
+    "expectedAnswer": "GBP 8.95"
+  },
+  {
+    "id": "shipping-methods-008",
+    "question": "When is standard UK shipping free?",
+    "expectedSourceIds": ["shipping-methods"],
+    "expectedAnswer": "GBP 60 or more after discounts"
+  },
+  {
+    "id": "international-delivery-009",
+    "question": "How long does international delivery take?",
+    "expectedSourceIds": ["international-delivery"],
+    "expectedAnswer": "7 to 14 business days"
+  },
+  {
+    "id": "international-delivery-010",
+    "question": "Who pays import duties?",
+    "expectedSourceIds": ["international-delivery"],
+    "expectedAnswer": "The recipient"
+  },
+  {
+    "id": "warranty-policy-011",
+    "question": "How are damaged products handled on arrival?",
+    "expectedSourceIds": ["warranty-policy"],
+    "expectedAnswer": "Contact within 48 hours; free return and replacement or refund"
+  },
+  {
+    "id": "warranty-policy-012",
+    "question": "Does warranty cover accidental damage?",
+    "expectedSourceIds": ["warranty-policy"],
+    "expectedAnswer": "No"
+  },
+  {
+    "id": "payment-methods-013",
+    "question": "What happens when a payment is pending?",
+    "expectedSourceIds": ["payment-methods"],
+    "expectedAnswer": "Stock reserved for 24 hours"
+  },
+  {
+    "id": "payment-methods-014",
+    "question": "Can I pay using Apple Pay?",
+    "expectedSourceIds": ["payment-methods"],
+    "expectedAnswer": "Yes"
+  },
+  {
+    "id": "customer-support-015",
+    "question": "What are the customer support hours?",
+    "expectedSourceIds": ["customer-support"],
+    "expectedAnswer": "Monday to Friday 09:00 to 17:00 UK time"
+  },
+  {
+    "id": "customer-support-016",
+    "question": "Is telephone support available?",
+    "expectedSourceIds": ["customer-support"],
+    "expectedAnswer": "No"
+  },
+  {
+    "id": "inventory-procedures-017",
+    "question": "When is a reorder alert raised?",
+    "expectedSourceIds": ["inventory-procedures"],
+    "expectedAnswer": "Below 20 units"
+  },
+  {
+    "id": "inventory-procedures-018",
+    "question": "Can customers purchase out-of-stock products?",
+    "expectedSourceIds": ["inventory-procedures"],
+    "expectedAnswer": "No"
+  },
+  {
+    "id": "order-cancellation-019",
+    "question": "When can an order be cancelled?",
+    "expectedSourceIds": ["order-cancellation"],
+    "expectedAnswer": "Before dispatch"
+  },
+  {
+    "id": "promotions-discounts-020",
+    "question": "Can I combine promotional codes?",
+    "expectedSourceIds": ["promotions-discounts"],
+    "expectedAnswer": "Only one code per order"
+  }
+]
