@@ -5,15 +5,13 @@ import {
   defineCustomSection,
   createAuthSections,
 } from "@nestjs-cms/admin";
-import {
-  Dashboard,
-  Knowledge,
-  Chat,
-  Search,
-  Jobs,
-  Evaluations,
-  Settings,
-} from "./views";
+import { Dashboard } from "../sections/dashboard";
+import { Knowledge } from "../sections/knowledge";
+import { Search } from "../sections/search";
+import { Chat } from "../sections/chat";
+import { Jobs } from "../sections/jobs";
+import { Evaluations } from "../sections/evaluations";
+import { Settings } from "../sections/settings";
 const permissions = [
   { value: "users:manage", label: "Manage users and roles" },
   { value: "hub:admin", label: "Administer all knowledge and run evaluations" },
