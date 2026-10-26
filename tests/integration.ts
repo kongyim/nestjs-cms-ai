@@ -102,6 +102,8 @@ test(
         ),
       );
       assert.equal((await other(`/knowledge-bases/${kb.id}`)).status, 404);
+      assert.equal((await other("/knowledge_bases")).status, 403);
+      assert.equal((await other("/document_chunks")).status, 403);
       assert.equal(
         (await other("/search", { knowledgeBaseId: kb.id, query: "refund" }))
           .status,
@@ -255,3 +257,106 @@ test(
     }
   },
 );
+
+test("discovered CMS resource APIs use the same records and protect workflow/history boundaries", async () => {
+  const admin = client(
+    await login(
+      process.env.ADMIN_BOOTSTRAP_EMAIL!,
+      process.env.ADMIN_BOOTSTRAP_PASSWORD!,
+    ),
+  );
+  const identity = await json<RecordId>(await admin("/auth/me"));
+  for (const resource of ["documents", "document_chunks", "ingestion_jobs"]) {
+    const list = await json<{
+      data: Record<string, unknown>[];
+      meta: { total: number };
+    }>(await admin("/" + resource + "?limit=1"));
+    assert.ok(Array.isArray(list.data));
+    assert.equal(typeof list.meta.total, "number");
+    if (resource === "document_chunks")
+      assert.ok(
+        list.data.every(
+          (row) =>
+            !Object.hasOwn(row, "embedding") && !Object.hasOwn(row, "search"),
+        ),
+      );
+  }
+  const definitions = await json<{ name: string }[]>(
+    await admin("/_resources"),
+  );
+  for (const name of [
+    "knowledge_bases",
+    "documents",
+    "document_chunks",
+    "ingestion_jobs",
+    "chat_sessions",
+    "chat_messages",
+    "evaluation_runs",
+  ])
+    assert.ok(
+      definitions.some((d) => d.name === name),
+      name,
+    );
+  const kb = await json<RecordId>(
+    await admin("/knowledge_bases", {
+      name: "Discovered resource test",
+      ownerId: identity.id,
+      visibility: "shared",
+    }),
+  );
+  try {
+    const list = await json<{ data: RecordId[] }>(
+      await admin(
+        "/knowledge_bases?query=" +
+          encodeURIComponent(JSON.stringify({ id: kb.id })),
+      ),
+    );
+    assert.equal(list.data[0].id, kb.id);
+    await json(
+      await admin(
+        `/knowledge-bases/${kb.id}`,
+        { description: "Domain update through ResourceService" },
+        "PATCH",
+      ),
+    );
+    const updated = await json<{ visibility: string; description: string }>(
+      await admin(`/knowledge_bases/${kb.id}`),
+    );
+    assert.equal(updated.visibility, "shared");
+    assert.equal(updated.description, "Domain update through ResourceService");
+    assert.equal(
+      (
+        await admin(
+          `/knowledge_bases/${kb.id}`,
+          { ownerId: randomUUID() },
+          "PATCH",
+        )
+      ).status,
+      403,
+    );
+    assert.equal(
+      (await admin(`/knowledge_bases/${kb.id}`, undefined, "DELETE")).status,
+      403,
+    );
+    assert.equal(
+      (
+        await admin("/documents", {
+          knowledgeBaseId: kb.id,
+          filename: "bypass.txt",
+          mimeType: "text/plain",
+          size: 5,
+          storageKey: randomUUID(),
+          contentHash: "a".repeat(64),
+          status: "ready",
+          version: 1,
+          errorMessage: null,
+        })
+      ).status,
+      403,
+    );
+    for (const name of ["chat_sessions", "chat_messages", "evaluation_runs"])
+      assert.equal((await admin("/" + name)).status, 403, name);
+  } finally {
+    await admin(`/knowledge-bases/${kb.id}`, undefined, "DELETE");
+  }
+});

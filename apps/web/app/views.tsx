@@ -595,8 +595,8 @@ export function Search() {
             placeholder="How long do international deliveries take?"
           />
         </label>
-        <div className="row">
-          <label>
+        <div className="row form-toolbar">
+          <label className="checkbox-field">
             <input
               type="checkbox"
               checked={hybrid}
@@ -604,7 +604,7 @@ export function Search() {
             />{" "}
             Hybrid retrieval
           </label>
-          <label>
+          <label className="compact-field">
             Top K{" "}
             <select
               value={topK}
@@ -927,8 +927,8 @@ export function Evaluations() {
           retrieval, not answer correctness. Mock runs do not establish real
           model quality.
         </p>
-        <div className="row">
-          <label>
+        <div className="row form-toolbar">
+          <label className="compact-field">
             Top K{" "}
             <select
               value={topK}
@@ -939,7 +939,7 @@ export function Evaluations() {
               ))}
             </select>
           </label>
-          <label>
+          <label className="checkbox-field">
             <input
               type="checkbox"
               checked={hybrid}

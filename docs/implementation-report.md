@@ -95,3 +95,9 @@ docker compose -p hub-docker exec api node dist/scripts/evaluate.js
 Use one workflow at a time on ports 3000/3001. The native workflow stores files in `.data/uploads`; the Docker workflow uses its own persistent upload volume. Follow README configuration for genuine AI instead of the default mock.
 
 Next priorities: settle ecosystem licensing, verify real providers, add failure/concurrency and parser-hardening coverage, implement durable evaluation/cleanup jobs, then add permission-mapped CMS synchronization.
+
+## Follow-up: automatic API resource discovery
+
+The seven hub entities now have default-exported `defineResource` files in `apps/api/src/resources`. The CMS loads this folder through `cmsAuthOptions()` in source (`.ts`) and compiled (`.js`) execution. Knowledge-base create/update delegates to the actual CMS `ResourceService`; generated administrative lists are enabled, and resource hooks/host policy preserve workflow mutations and private-history isolation. Migration 003 adds the timestamps expected by CMS entities without changing existing IDs or vector indexes.
+
+Verified after this change: TypeScript compilation/checking and targeted ESLint passed; 11 unit tests passed with 1 optional real-provider test skipped; both database integration tests passed. The API was started successfully from source and compiled output on an isolated port, leaving the user's running API untouched. The additive migration was applied locally. Restart an existing API process to load the new resource configuration. See `docs/resources.md` for extension and route behavior.

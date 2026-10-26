@@ -6,7 +6,7 @@ import { CmsAuthModule } from "@nestjs-cms/auth";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { json } from "express";
 import { randomUUID } from "node:crypto";
-import { authOptions, AiProviderModule } from "../../../packages/cms-ai/src";
+import { AiProviderModule } from "../../../packages/cms-ai/src";
 import { Database } from "./db";
 import { LocalStorage } from "./storage";
 import { HubService } from "./hub.service";
@@ -15,9 +15,10 @@ import { HubGuard, ErrorFilter } from "./security";
 import { EvaluationService } from "./evaluation";
 import { config, provider, aiConfig } from "./config";
 import { log } from "./log";
+import { cmsAuthOptions } from "./cms.config";
 @Module({
   imports: [
-    CmsAuthModule.forRoot(authOptions()),
+    CmsAuthModule.forRoot(cmsAuthOptions()),
     AiProviderModule.forRoot(aiConfig),
   ],
   controllers: [HubController],

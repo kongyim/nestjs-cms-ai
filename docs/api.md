@@ -24,6 +24,10 @@ Authenticate using `POST /auth/login` with `{email,password}` and `x-cms-request
 
 Knowledge responses are direct JSON records/arrays; CMS resources retain their native `{data,meta}` list shape. Errors use `{error:{status,message,requestId}}`. Invalid input is 400, missing identity 401, invalid origin/administrator permission 403, inaccessible objects 404, duplicate/active ingestion 409, AI rate limits 429. Unexpected exceptions return a generic 500 without stack traces.
 
+## Automatically discovered CMS resources
+
+The hub also registers seven resources from `apps/api/src/resources`. Generated administrative routes such as `/api/knowledge_bases`, `/api/document_chunks` and `/api/ingestion_jobs` use the CMS list/filter contract. Workflow mutations and private history remain on their dedicated guarded endpoints. See [resource definitions and route policy](resources.md).
+
 ## Streaming
 
 Each record is `data: <JSON>\n\n`. Event types:

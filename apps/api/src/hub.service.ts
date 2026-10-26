@@ -9,6 +9,8 @@ import {
 import { randomUUID, createHash } from "node:crypto";
 import { extname } from "node:path";
 import { z } from "zod";
+import { ResourceService } from "@nestjs-cms/core";
+import knowledgeBasesResource from "./resources/knowledge-bases";
 import { Database } from "./db";
 import { LocalStorage } from "./storage";
 import { config } from "./config";
@@ -56,12 +58,8 @@ export type Session = {
   userId: string;
   title: string;
 };
-export const kbInput = z
-  .object({
-    name: z.string().trim().min(1).max(160),
-    description: z.string().max(4000).default(""),
-    visibility: z.enum(["private", "shared"]).default("private"),
-  })
+export const kbInput = knowledgeBasesResource.schema
+  .omit({ ownerId: true })
   .strict();
 export const searchInput = z
   .object({
@@ -82,6 +80,7 @@ export class HubService {
   constructor(
     readonly db: Database,
     readonly storage: LocalStorage,
+    private readonly resources: ResourceService,
     @Inject(AI_PROVIDER) readonly ai: AIProvider,
   ) {}
   async kb(actor: Actor, id: string, write = false): Promise<KB> {
@@ -101,21 +100,19 @@ export class HubService {
   }
   async create(actor: Actor, input: unknown) {
     const data = kbInput.parse(input);
-    const [kb] = await this.db.query<KB>(
-      'INSERT INTO knowledge_bases(id,name,description,visibility,"ownerId") VALUES($1,$2,$3,$4,$5) RETURNING *',
-      [randomUUID(), data.name, data.description, data.visibility, actor.id],
-    );
-    return kb;
+    return this.resources.create("knowledge_bases", {
+      ...data,
+      ownerId: actor.id,
+    });
   }
   async update(actor: Actor, id: string, input: unknown) {
     await this.kb(actor, id, true);
-    const data = kbInput.partial().parse(input);
-    return (
-      await this.db.query<KB>(
-        'UPDATE knowledge_bases SET name=COALESCE($2,name),description=COALESCE($3,description),visibility=COALESCE($4,visibility),"updatedAt"=now() WHERE id=$1 RETURNING *',
-        [id, data.name, data.description, data.visibility],
-      )
-    )[0];
+    const raw = z.record(z.string(), z.unknown()).parse(input);
+    const parsed = kbInput.partial().parse(raw);
+    const patch = Object.fromEntries(
+      Object.entries(parsed).filter(([key]) => Object.hasOwn(raw, key)),
+    );
+    return this.resources.update("knowledge_bases", id, patch);
   }
   async removeKB(actor: Actor, id: string) {
     await this.kb(actor, id, true);

@@ -104,6 +104,7 @@ The optional real-provider smoke runs with `REAL_PROVIDER_SMOKE=1 pnpm test` and
 ## Documentation
 
 - [CMS package investigation and compatibility](docs/cms-integration-analysis.md)
+- [Automatically discovered API resources](docs/resources.md)
 - [Architecture and database boundaries](docs/architecture.md)
 - [API contract](docs/api.md) · live OpenAPI: http://localhost:3001/api/docs
 - [Configuration reference](docs/environment.md)

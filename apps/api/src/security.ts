@@ -16,6 +16,7 @@ import { Queue } from "bullmq";
 import { ZodError } from "zod";
 import { config, redis } from "./config";
 import { log } from "./log";
+import { privateHistoryResources } from "./resources/_managed";
 export type AuthRequest = Request & { identity: Identity; requestId: string };
 export const Public = () => SetMetadata("hub:public", true);
 @Injectable()
@@ -29,6 +30,18 @@ export class HubGuard implements CanActivate {
     await this.queue.close();
   }
   async canActivate(context: ExecutionContext) {
+    if (
+      this.reflector.get("nestjs-cms:resource-controller", context.getClass())
+    ) {
+      const request = context.switchToHttp().getRequest<AuthRequest>();
+      const name = request.params.resource;
+      if (typeof name === "string" && privateHistoryResources.has(name)) {
+        throw new ForbiddenException(
+          "Use the owner-scoped chat/evaluation endpoints for private history.",
+        );
+      }
+      return true; // The CMS guard enforces the discovered resource permission map.
+    }
     if (
       this.reflector.get("hub:public", context.getHandler()) ||
       this.reflector.get("nestjs-cms:auth-controller", context.getClass()) ||

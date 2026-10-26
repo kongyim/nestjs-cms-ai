@@ -6,6 +6,10 @@ Run all local commands from the repository root so dotenv, migrations and storag
 
 `pnpm db:migrate` applies ordered SQL once under a PostgreSQL advisory transaction lock. CMS auth entities and host entities share a database but have distinct ownership boundaries. The CMS module initializes a TypeORM connection; vector/domain queries use a bounded `pg` pool. No Prisma shadow schema or duplicate auth tables are introduced. Do not edit applied migrations; add a new migration instead.
 
+## Resource discovery
+
+Hub resource schemas, relationships and lifecycle hooks live in `apps/api/src/resources` and are automatically loaded by `CmsAuthModule` using the shared configuration in `cms.config.ts`. New definition files need no index registration; database changes still require migrations. See [the resource guide](resources.md).
+
 ## Ingestion recovery
 
 The worker dispatches persistent pending job IDs every two seconds. BullMQ retries three times with exponential backoff; provider HTTP calls retry transient network/429/5xx failures twice. A final failure appears on the document/job and is recoverable using Reindex. Failed queue jobs are retained seven days and completed jobs one day. There is a visible failed-job state, not a separate dead-letter service.
