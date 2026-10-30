@@ -3,10 +3,10 @@ import { useState } from "react";
 import { api } from "../lib/api";
 import { useData } from "../hooks/use-data";
 import type { KB, Hit } from "../lib/types";
-import { Frame } from "../components/frame";
-import { ErrorBox } from "../components/error-box";
-import { KBSelect } from "../components/knowledge-base-select";
-import { Badge } from "../components/badge";
+import { Frame } from "./frame";
+import { ErrorBox } from "./error-box";
+import { KBSelect } from "./knowledge-base-select";
+import { Badge } from "./badge";
 
 export function Search() {
   const { data: bases, error } = useData<KB[]>("/knowledge-bases", []);

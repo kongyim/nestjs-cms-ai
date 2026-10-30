@@ -1,7 +1,7 @@
 "use client";
 import { useData } from "../hooks/use-data";
-import { Frame } from "../components/frame";
-import { ErrorBox } from "../components/error-box";
+import { Frame } from "./frame";
+import { ErrorBox } from "./error-box";
 
 export function Settings() {
   const { data, error } = useData<Record<string, unknown>>("/settings", {});

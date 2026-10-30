@@ -33,6 +33,18 @@ Seeding deliberately uses authenticated HTTP uploads: **start the API and worker
 
 The default `.env.example` explicitly selects `AI_PROVIDER=mock`. This produces labelled extracts and deterministic hashed embeddings to exercise the application without paid credentials. It is not genuine LLM generation and is never used as a failure fallback.
 
+## Web application structure
+
+`apps/web` uses `@nestjs-cms/admin@0.1.4` and follows its recommended sections layout:
+
+- `src/admin.config.ts` composes the theme, permissions, and explicitly registered sections in navigation order within the client boundary.
+- `src/sections/*.ts` each default-export a `defineCustomSection(...)` definition.
+- `src/components/` contains the section React views and shared UI components.
+- `src/hooks/` and `src/lib/` contain shared data hooks, API helpers, and types.
+- `src/app/` contains the Next.js routes, layout, styles, and same-origin API proxy.
+
+Add new section definitions under `src/sections/` and register them in `src/admin.config.ts`. Users and roles use `createAuthSections(permissions)`; if extra auth fields are needed, add `src/sections/auth-extensions.ts` and pass its configuration as the second argument, with matching backend fields.
+
 ## Full Docker workflow
 
 ```bash
@@ -118,4 +130,4 @@ The optional real-provider smoke runs with `REAL_PROVIDER_SMOKE=1 pnpm test` and
 
 No OCR, agent execution, MCP server, tenants, cloud storage, reranker, incremental CMS content sync, or model-judged answer quality is claimed. Token budgets use a character estimate, not model-specific tokenization. Historical turns are displayed but not sent to generation; every question uses fresh evidence. Evaluations run within an HTTP request and are not yet a durable background workflow. Parsing untrusted complex files needs further resource isolation for public deployments.
 
-`@nestjs-cms/admin@0.1.3` is published as `UNLICENSED`, and the other investigated CMS metadata omit license grants. An MIT license for the assembled project is therefore deferred pending the author's licensing clarification. No upstream packages have been modified or republished. See [integration analysis](docs/cms-integration-analysis.md).
+`@nestjs-cms/admin@0.1.4` is published as `UNLICENSED`, and the other investigated CMS metadata omit license grants. An MIT license for the assembled project is therefore deferred pending the author's licensing clarification. No upstream packages have been modified or republished. See [integration analysis](docs/cms-integration-analysis.md).

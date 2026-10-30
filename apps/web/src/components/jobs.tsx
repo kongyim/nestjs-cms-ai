@@ -1,9 +1,9 @@
 "use client";
 import { useData } from "../hooks/use-data";
 import type { Job } from "../lib/types";
-import { Frame } from "../components/frame";
-import { ErrorBox } from "../components/error-box";
-import { Badge } from "../components/badge";
+import { Frame } from "./frame";
+import { ErrorBox } from "./error-box";
+import { Badge } from "./badge";
 
 export function Jobs() {
   const { data, error } = useData<Job[]>("/ingestion-jobs", [], 2500);

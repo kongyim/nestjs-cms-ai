@@ -3,10 +3,10 @@ import { useState } from "react";
 import { api } from "../lib/api";
 import { useData } from "../hooks/use-data";
 import type { KB } from "../lib/types";
-import { Frame } from "../components/frame";
-import { ErrorBox } from "../components/error-box";
-import { Badge } from "../components/badge";
-import { Documents } from "../components/document-management";
+import { Frame } from "./frame";
+import { ErrorBox } from "./error-box";
+import { Badge } from "./badge";
+import { Documents } from "./document-management";
 
 export function Knowledge() {
   const { data: bases, error, refresh } = useData<KB[]>("/knowledge-bases", []);

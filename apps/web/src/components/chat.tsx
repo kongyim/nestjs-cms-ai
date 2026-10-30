@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "../lib/api";
 import { useData } from "../hooks/use-data";
 import type { KB, Session, ChatMessage, Source } from "../lib/types";
-import { Frame } from "../components/frame";
-import { ErrorBox } from "../components/error-box";
-import { KBSelect } from "../components/knowledge-base-select";
-import { SourceCards } from "../components/source-cards";
+import { Frame } from "./frame";
+import { ErrorBox } from "./error-box";
+import { KBSelect } from "./knowledge-base-select";
+import { SourceCards } from "./source-cards";
 
 export function Chat() {
   const { data: bases, error } = useData<KB[]>("/knowledge-bases", []);
